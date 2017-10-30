@@ -15,5 +15,7 @@
 define('APP_PATH', __DIR__ . '/../app/');
 //定义配置文件目录
 define('CONF_PATH', __DIR__ . '/../conf/');
+// define('BIND_MODULE', 'admin/index');
+// define('BIND_MODULE', 'admin');
 // 加载框架引导文件
 require __DIR__ . '/../thinkphp/start.php';

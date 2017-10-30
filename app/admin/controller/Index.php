@@ -1,5 +1,5 @@
 <?php
-namespace app\index\controller;
+namespace app\admin\controller;
 use app\common\controller\Index as commonIndex;
 use think\Config;
 use think\Env;
@@ -45,18 +45,8 @@ class Index
     	return $common->index();
     }
 
-     public function info($id)
-    {
-        //http://127.0.0.1:8099/myfunds/public/index/index/info/id/5
-        //http://127.0.0.1:8099/myfunds/public/news/5.html
-        echo url('index/index/index', ['id' => 10]) ."<br>";
-        echo url('index/index/info', ['id' => 10]) ."<br>";
-        return "{$id}";
-    }
-
     public function demo()
     {
-        return 'demo';
+        return "i'm in admin";
     }
-
 }
