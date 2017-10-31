@@ -26,4 +26,49 @@ class Excel
 		$PHPWriter->save($path.'/demo.xlsx'); //表示在$path路径下面生成demo.xlsx文件
 		
 	}
+	public function  read()
+	{
+		$path = dirname(__FILE__); //找到当前脚本所在路径
+		dump($path);
+		error_reporting(E_ALL);  
+		// date_default_timezone_set('Asia/ShangHai');  
+		// include_once('Classes/PHPExcel/IOFactory.php');//包含类文件  
+		  
+		$filename = $path.'\myMoney.xls';
+		if (!file_exists($filename)) {  
+		exit("not found.\n");  
+		}  
+		  
+		// $reader = PHPExcel_IOFactory::createReader('Excel2007'); //设置以Excel5格式(Excel97-2003工作簿)  
+		// $PHPExcel = $reader->load($filename); // 载入excel文件  
+		$ext = strtolower(pathinfo($filename,PATHINFO_EXTENSION));
+		if($ext == 'xlsx'){
+		    $reader=PHPExcel_IOFactory::createReader('Excel2007');
+		    $PHPExcel = $reader->load($filename,'utf-8');
+		}elseif($ext == 'xls'){
+		    $reader=PHPExcel_IOFactory::createReader('Excel5');
+		    $PHPExcel = $reader->load($filename,'utf-8');
+		}
+
+		$sheet = $PHPExcel->getSheet(0); // 读取第一個工作表  
+		$highestRow = $sheet->getHighestRow(); // 取得总行数  
+		$highestColumm = $sheet->getHighestColumn(); // 取得总列数  
+		  
+		/** 循环读取每个单元格的数据 */  
+		$dataset=array();  
+		echo "<table border=1>";  
+		for ($row =1; $row <= $highestRow; $row++){//行数是以第1行开始  
+			echo "<tr>";  
+			echo "<td>".$row."</td>";  
+
+			for ($column = 'A'; $column <= $highestColumm; $column++) {//列数是以A列开始  
+				
+					echo "<td>".$sheet->getCell($column.$row)->getValue()."</td>";  
+				
+			}
+			echo "</tr>";  
+		}  
+		echo "</table>"; 
+		
+	}
 }
