@@ -60,15 +60,84 @@ CREATE TABLE `myfunds_expense` (
   -- CONSTRAINT `t_book_ibfk_1` FOREIGN KEY (`bookType`) REFERENCES `t_bookclass` (`bookClassId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- -- -- ----------------------------
--- -- -- Records of t_book
--- -- -- ----------------------------
+-- -- ----------------------------
+-- -- Records of t_book
+-- -- ----------------------------
 -- INSERT INTO `myfunds_expense` VALUES ('1', '支出', '2017-10-30 23:22:14', '金融保险', '基金/股票历史亏损', '财通可持续组合', '', '基金股票浮动/历史亏损', '', '', '12.91', '我是附注');
--- -- -- INSERT INTO `t_book` VALUES ('113', '安卓程序设计', '7', '13.5', '12', '理工大学出版社', '2009-05-20 00:00:00', '../upload/2013/07/37044500.jpg');
--- -- -- INSERT INTO `t_book` VALUES ('114', 'asp程序设计', '7', '35', '19', '理工大学', '2013-07-17 00:00:00', '../upload/2013/07/19957400.jpg');
--- -- -- INSERT INTO `t_book` VALUES ('115', '中国近代史', '5', '28', '25', '四川大学出版社', '2013-07-09 00:00:00', '../upload/2013/07/79494300.jpg');
--- -- INSERT INTO `t_book` VALUES ('116', '中国古代史', '5', '40', '18', '电子科技大学', '2013-07-02 00:00:00', '../upload/2013/07/15688400.jpg');
--- -- INSERT INTO `t_book` VALUES ('119', 'ceshi', '5', '12.5', '12', 'fafafa', '2013-07-01 00:00:00', '../upload/NoImage.jpg');
+
+
+
+-- ----------------------------
+-- Table structure for `t_book`
+-- ----------------------------
+DROP TABLE IF EXISTS `myfunds_income`;
+CREATE TABLE `myfunds_income` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+   `transactionType` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '交易类型',
+  `date` datetime DEFAULT NULL COMMENT '交易时期',
+  `category` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '分类',
+  `subCategory` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '子分类',
+  `accountOut` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '账户1',
+
+  `accountIn` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '账户2',
+  `project` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '项目',
+  `member` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '成员',
+  `merchant` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商户',
+  `sum` float NOT NULL COMMENT '金额',
+  `notes` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '附注',
+
+  -- `bookType` int(11) NOT NULL COMMENT '图书所在类别',
+  -- `count` int(11) NOT NULL COMMENT '库存',
+  -- `publish` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '出版社',
+  -- `publishDate` datetime DEFAULT NULL,
+  -- `photo` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '图书图片',
+  PRIMARY KEY (`id`)
+  -- KEY `bookType` (`bookType`),
+  -- CONSTRAINT `t_book_ibfk_1` FOREIGN KEY (`bookType`) REFERENCES `t_bookclass` (`bookClassId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -- ----------------------------
+-- -- Records of t_book
+-- -- ----------------------------
+-- INSERT INTO `myfunds_income` VALUES ('1', '收入', '2017-10-30 23:22:14', '金融保险', '基金/股票历史亏损', '财通可持续组合', '', '基金股票浮动/历史亏损', '', '', '12.91', '我是附注');
+
+
+-- ----------------------------
+-- Table structure for `t_book`
+-- ----------------------------
+DROP TABLE IF EXISTS `myfunds_transfer`;
+CREATE TABLE `myfunds_transfer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+   `transactionType` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '交易类型',
+  `date` datetime DEFAULT NULL COMMENT '交易时期',
+  `category` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '分类',
+  `subCategory` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '子分类',
+  `accountOut` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '账户1',
+
+  `accountIn` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '账户2',
+  `project` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '项目',
+  `member` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '成员',
+  `merchant` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商户',
+  `sum` float NOT NULL COMMENT '金额',
+  `notes` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '附注',
+
+  -- `bookType` int(11) NOT NULL COMMENT '图书所在类别',
+  -- `count` int(11) NOT NULL COMMENT '库存',
+  -- `publish` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '出版社',
+  -- `publishDate` datetime DEFAULT NULL,
+  -- `photo` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '图书图片',
+  PRIMARY KEY (`id`)
+  -- KEY `bookType` (`bookType`),
+  -- CONSTRAINT `t_book_ibfk_1` FOREIGN KEY (`bookType`) REFERENCES `t_bookclass` (`bookClassId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -- ----------------------------
+-- -- Records of t_book
+-- -- ----------------------------
+-- INSERT INTO `myfunds_income` VALUES ('1', '收入', '2017-10-30 23:22:14', '金融保险', '基金/股票历史亏损', '财通可持续组合', '', '基金股票浮动/历史亏损', '', '', '12.91', '我是附注');
+
+
+
 
 -- -- ----------------------------
 -- -- Table structure for `t_bookclass`

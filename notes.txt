@@ -184,5 +184,14 @@ $array = [
 $excelData = array();
 
 
+
+$urls= array('aaa','bbb','ccc','ddd'); 
+    foreach ($urls as $url){ 
+      echo "This Site url is $url! <br />"; 
+    }
+	
+
 .env 开启调试模式
 app_debug =  true
+
+

@@ -127,17 +127,33 @@ class Index
         // $res = db('user',[],false)->select();//db助手函数，不要实例化 Db类是单例模式 
 
         $this->printExcel();
-        $db = Db::name('expense');
+        $db = Db::name('transfer');
+        //insert返回影响记录的行数 插入数
         // $db->insert([
         //     'email' => 'imooc_03@qq.com',
         //     'password' => md5('imooc_03'),
         //     'username' => 'imooc_03'
         // ]);
+
+        //insertGetId 返回插入数据的自增id
+        
+        //insertAll 返回插入数据成功的行数
+        // $data = [];
+        // for($i=0; $i<10; $i++) {
+        //     $data[] = [
+        //         'email' => "imooc_03_{$i}@qq.com",
+        //         'password' => md5("imooc_{$i}"),
+        //         'username' => "imooc_{$i}"
+        //     ];
+        // }
+        // $db->insertAll($data);
+
+
         $res = $db -> select();
         dump($res);
     }
 
-    public function readExcel(){
+    public function readExcel($page = 0){
         $path = dirname(__FILE__); //找到当前脚本所在路径
         // dump($path);
         error_reporting(E_ALL);  
@@ -158,7 +174,7 @@ class Index
             $PHPExcel = $reader->load($filename,'utf-8');
         }
 
-        $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表  
+        $sheet = $PHPExcel->getSheet($page); // 读取第一個工作表  
         $highestRow = $sheet->getHighestRow(); // 取得总行数  
         $highestColumm = $sheet->getHighestColumn(); // 取得总列数  
 
@@ -178,7 +194,7 @@ class Index
 
     public function  printExcel()
     {
-        $res = $this->readExcel();
+        $res = $this->readExcel(4);
         // dump($exceldata);
 
         /** 循环读取每个单元格的数据 */  
@@ -195,25 +211,42 @@ class Index
         echo "</table>"; 
     }
 
-    public function  saveToDb()
+    public function  saveToDb($page=0)
     {
-        $res = $this->readExcel();
-        // dump($exceldata);
+        $res = $this->readExcel($page);
+        // dump($res);
 
         // $this->printExcel();
-        $db = Db::name('expense');
+
+
+        switch ($page)
+            {
+            case 0:
+              $curTable = 'expense';
+              break;
+            case 1:
+              $curTable = 'income';
+              break;
+            case 4:
+              $curTable = 'transfer';
+              break;
+            default:
+              echo "No table";
+            }
+
+        $db = Db::name($curTable);
         $rowData = array();
         $key = [
             'A' => 'transactionType',
-            'B' => 'date',
-            'C' => 'category',
-            'D' => 'subCategory',
-            'E' => 'accountOut',
-            'F' => 'accountIn',
-            'G' => 'project',
-            'H' => 'member',
-            'I' => 'merchant',
-            'J' => 'sum',
+            'J' => 'date',
+            'B' => 'category',
+            'C' => 'subCategory',
+            'D' => 'accountOut',
+            'E' => 'accountIn',
+            'I' => 'project',
+            'G' => 'member',
+            'H' => 'merchant',
+            'F' => 'sum',
             'K' => 'notes',
         ];
         /** 循环读取每个单元格的数据 */  
@@ -225,12 +258,134 @@ class Index
             }
         }  
 
-        // $res = $db->insertAll($rowData);
-     
+        $res = $db->insertAll($rowData);
+
 
         $data = $db -> select();
         dump($data);
     }
 
+    public function initialAllData(){
+        //source D:\Users\zhangxy\Documents\Learning\www\Apache24\htdocs\myfunds\myfunds_db.sql
+
+        // $this->saveToDb(0);//支出
+        // $this->saveToDb(1);//收入
+        // $this->saveToDb(4);//转账
+    }
+
+
+    public function queryData(){
+       
+        //1
+        // $sql = $db->where([
+        //         'id' => 1
+        // ])->buildSql();
+
+        //2
+        // $sql = $db->where("id=1")->buildSql();
+
+        //3
+        // $sql = $db->where("id", 1)->buildSql();
+
+        //4 条件表达式 不区分大小写
+        //EQ =
+        //NEQ <>
+        //LT <
+        //ELT <=
+        //GT >
+        //EGT >=
+        //BETWEEN BETWEEN * AND *
+        //NOTBETWEEN NOTBETWEEN * AND *
+        //IN IN(*,*)
+        //NOTIN NOT IN(*,*)
+        // $sql = $db->where("id", "EGT", 1)->buildSql();
+        // $sql = $db->where("id", "notbetween", "1,5")->buildSql();
+        // $sql = $db->where("id", "notbetween", [1,10])->buildSql();
+        // $sql = $db->where("id", "in", [1,10,20])->buildSql();
+
+
+        //5
+        // $sql = $db->where([
+        //         'id' => ['EGT', 1],
+        //         'username' => ['IN', [1,2,3,4,5]]
+        // ])->buildSql();
+
+        //6
+        // $sql = $db->where("id", "EXP", "not in (1,2,3)")->buildSql();
+
+        //7
+        // $sql = $db
+        // ->where("id", "in", "1,2,3")
+        // ->where("username", "eq", "my")
+        // ->buildSql();
+
+        //8
+        // $sql = $db
+        // ->where("id", "in", "1,2,3")
+        // ->whereOr("username", "eq", "my")
+        // ->buildSql();
+
+        // dump($sql);
+
+        // $db = Db::name('transfer');
+        // $res = Db::table('myfunds_transfer')
+        // ->where([
+        //     'accountOut' => '❤️财通可持续组合'
+        //     ])
+        // ->whereOr('accountIn', 'EQ', '❤️财通可持续组合')
+        // ->select();
+
+       
+
+    }
+
+    public function buyinSum()
+    {
+        $db = Db::name('transfer');
+        $accountsIn = Db::table('myfunds_transfer')
+        ->order("id DESC")
+        ->column('sum', 'accountIn');
+        $buyin = [];
+        foreach($accountsIn as $key => $accountIn) {
+            $buyin[$key] = Db::table('myfunds_transfer')
+            ->where([
+                'accountIn' => $key
+                ])
+            ->sum('sum');
+        }
+        // dump($buyin);
+
+        header('Content-type: text/json;charset=utf-8');
+        $result['result'] = $buyin;
+        $result['code'] = '200';
+        $result['resultMassage'] = 'buyinSum查询成功';
+        $result['success'] = true;
+        echo json_encode($result, JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+    public function selloutSum()
+    {
+        $db = Db::name('transfer');
+        $accountsOut = Db::table('myfunds_transfer')
+        ->order("id DESC")
+        ->column('sum', 'accountOut');
+        $sellout = [];
+        foreach($accountsOut as $key => $accountOut) {
+            $sellout[$key] = Db::table('myfunds_transfer')
+            ->where([
+                'accountOut' => $key
+                ])
+            ->sum('sum');
+        }
+        // dump($sellout);
+
+        header('Content-type: text/json;charset=utf-8');
+        $result['result'] = $sellout;
+        $result['code'] = '200';
+        $result['resultMassage'] = 'selloutSum查询成功';
+        $result['success'] = true;
+        echo json_encode($result, JSON_UNESCAPED_UNICODE);
+        exit();
+    }
 
 }
