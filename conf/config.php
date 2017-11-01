@@ -6,5 +6,5 @@ return [
 	'app_author' => 'littlecloudz',
 	'auto_bind_module'  => true,
 	'url_route_on'      => true,
-	'url_route_must'    => false,
+	'url_route_must'    => false
 ];

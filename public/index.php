@@ -15,6 +15,8 @@
 define('APP_PATH', __DIR__ . '/../app/');
 //定义配置文件目录
 define('CONF_PATH', __DIR__ . '/../conf/');
+//开启调试模式
+define('APP_DEBUG', true);
 // define('BIND_MODULE', 'admin/index');
 // define('BIND_MODULE', 'admin');
 // 加载框架引导文件

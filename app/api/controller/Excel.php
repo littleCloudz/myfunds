@@ -69,6 +69,30 @@ class Excel
 			echo "</tr>";  
 		}  
 		echo "</table>"; 
-		
+	}
+
+	public function  savetodb()
+	{
+		dump(config());
+		// $db = Db::name('user');
+        // $db->insert([
+        //     'email' => 'imooc_03@qq.com',
+        //     'password' => md5('imooc_03'),
+        //     'username' => 'imooc_03'
+        // ]);
+        // $res = $db -> select();
+        $res = Db::connect();
+        dump($res);
+		// $res = Db::connect()
+		// $res = Db::table('expense')->select();
+
+		// $db = Db::name('expense');
+  // //       $db->insert([
+  // //           'email' => 'imooc_03@qq.com',
+  // //           'password' => md5('imooc_03'),
+  // //           'username' => 'imooc_03'
+  // //       ]);
+  //       $res = $db -> select();
+        // dump($res);
 	}
 }
