@@ -194,7 +194,7 @@ class Index
 
     public function  printExcel()
     {
-        $res = $this->readExcel(4);
+        $res = $this->readExcel(1);
         // dump($exceldata);
 
         /** 循环读取每个单元格的数据 */  
@@ -383,6 +383,54 @@ class Index
         $result['result'] = $sellout;
         $result['code'] = '200';
         $result['resultMassage'] = 'selloutSum查询成功';
+        $result['success'] = true;
+        echo json_encode($result, JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+    public function minusSum()
+    {
+        $db = Db::name('expense');
+        $accountsOut = Db::table('myfunds_expense')
+        ->order("id DESC")
+        ->column('sum', 'accountOut');
+        $minus = [];
+        foreach($accountsOut as $key => $accountOut) {
+            $minus[$key] = Db::table('myfunds_expense')
+            ->where([
+                'accountOut' => $key
+                ])
+            ->sum('sum');
+        }
+        // dump($minus);
+
+        header('Content-type: text/json;charset=utf-8');
+        $result['result'] = $minus;
+        $result['code'] = '200';
+        $result['resultMassage'] = 'minusSum查询成功';
+        $result['success'] = true;
+        echo json_encode($result, JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+    public function plusSum()
+    {
+        $db = Db::name('income');
+        $accountsOut = Db::table('myfunds_income')
+        ->order("id DESC")
+        ->column('sum', 'accountOut');
+        $plus = [];
+        foreach($accountsOut as $key => $accountOut) {
+            $plus[$key] = Db::table('myfunds_income')
+            ->where([
+                'accountOut' => $key
+                ])
+            ->sum('sum');
+        }
+        // dump($plus);
+
+        header('Content-type: text/json;charset=utf-8');
+        $result['result'] = $plus;
+        $result['code'] = '200';
+        $result['resultMassage'] = 'plusSum查询成功';
         $result['success'] = true;
         echo json_encode($result, JSON_UNESCAPED_UNICODE);
         exit();
